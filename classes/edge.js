@@ -1,12 +1,17 @@
 export class Edge {
 
-    constructor(node, weight) {
-        this.node = node;
+    constructor(nodeFrom, nodeTo, weight) {
+        this.nodeFrom = nodeFrom;
         this.weight = weight;
+        this.nodeTo = nodeTo
     }
 
-    get getNode() {
-        return this.node;
+    get getNodeFrom() {
+        return this.nodeFrom;
+    }
+
+    get getNodeTo() {
+        return this.nodeTo;
     }
 
     get getWeight() {
@@ -14,7 +19,7 @@ export class Edge {
     }
 
     toString() {
-        return `(n:${this.node}, w:${this.weight})`;
+        return `(nFrom:${this.nodeFrom}, w:${this.weight}, nTo:${this.nodeTo})`;
     }
 
     print() {

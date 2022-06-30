@@ -17,13 +17,17 @@ export class GraphWM {
         return this.n;
     }
 
+    getEdge(row, column){
+        return new Edge(row, column, this.completeGraph[row][column]);
+    }
+
     /* return: list of Edges */
     adyacentByNode(node, sorting = null, useComplete = true) {
         let adjacent = (useComplete)? 
-            this.completeGraph[node].map((w, n) => new Edge(n, w)) :
+            this.completeGraph[node].map((w, n) => new Edge(node, n, w)) :
             this.graph[node].map((w, n) => {
                 // TODO: filter infinities
-                return new Edge(n, w)
+                return new Edge(node, n, w)
             })
         if(sorting) return adjacent.sort(sorting);
         return adjacent.filter(edge => edge.getWeight !== 0);

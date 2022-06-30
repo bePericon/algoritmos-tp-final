@@ -17,5 +17,7 @@ console.log("GRAFO COMPLETO");
 grafo.print();
 
 let { resultado, predecesores, visitados } = algoritmoGoloso(grafo);
-let aristas = resultado.map((arista) => `${arista.toString()}, `)
-console.log("Resultado algoritmo goloso: ", `[${aristas}]`)
+console.log("ALGORITMO GOLOSO");
+console.log("Resultado: ",  resultado);
+console.log("Predecesores: ", predecesores);
+console.log("Visitados: ", visitados);
