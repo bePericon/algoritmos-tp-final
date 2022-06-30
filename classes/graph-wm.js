@@ -17,6 +17,7 @@ export class GraphWM {
         return this.n;
     }
 
+    /* return: list of Edges */
     adyacentByNode(node, sorting = null, useComplete = true) {
         let adjacent = (useComplete)? 
             this.completeGraph[node].map((w, n) => new Edge(n, w)) :

@@ -16,5 +16,6 @@ const grafo = new GraphWM(grafo01);
 console.log("GRAFO COMPLETO");
 grafo.print();
 
-let resultado = algoritmoGoloso(grafo).map((arista) => `${arista.toString()}, `);
-console.log("Resultado algoritmo goloso: ", `[${resultado}]`)
+let { resultado, predecesores, visitados } = algoritmoGoloso(grafo);
+let aristas = resultado.map((arista) => `${arista.toString()}, `)
+console.log("Resultado algoritmo goloso: ", `[${aristas}]`)

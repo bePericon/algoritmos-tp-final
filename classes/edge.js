@@ -5,6 +5,10 @@ export class Edge {
         this.weight = weight;
     }
 
+    get getNode() {
+        return this.node;
+    }
+
     get getWeight() {
         return this.weight;
     }
