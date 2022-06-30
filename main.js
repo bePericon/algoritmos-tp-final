@@ -1,4 +1,3 @@
-import { GraphWM } from "./classes/graph-wm.js";
 import { algoritmoGoloso } from "./heuristica-golosa.js";
 
 // filas x columnas
@@ -11,12 +10,9 @@ const grafo01 = [
     [Infinity, Infinity, 1, Infinity,3, 0],
 ];
 
-const grafo = new GraphWM(grafo01);
-
+let { grafoCompleto, resultado, predecesores, visitados } = algoritmoGoloso(grafo01);
 console.log("GRAFO COMPLETO");
-grafo.print();
-
-let { resultado, predecesores, visitados } = algoritmoGoloso(grafo);
+grafoCompleto.print();
 console.log("ALGORITMO GOLOSO");
 console.log("Resultado: ",  resultado);
 console.log("Predecesores: ", predecesores);
