@@ -1,16 +1,12 @@
 import { GraphWM } from "./classes/graph-wm.js";
 import { Queue } from "./classes/queue.js";
 
-// Funcion para ordenar por peso.
-const ordernamientoPorPeso = (arista1, arista2) => arista1.weight - arista2.weight;
-
 // Heuristica golosa.
 // Parametros: 
 // - grafo inicial: matriz.
 // - vertice inicial: numero.
-//  TODO:
 // - aleatorizacion: funcion que elije la proxima arista.
-export const algoritmoGoloso = (grafo, verticeInicial = 0) => {
+export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento= null, aleatorizacion = null) => {
     let grafoCompleto = new GraphWM(grafo),
         resultado = [],
         visitados = GraphWM.newVector(grafoCompleto.numberNodes, false),
@@ -23,13 +19,15 @@ export const algoritmoGoloso = (grafo, verticeInicial = 0) => {
 
     while (!queue.isEmpty()) {
         let actual = queue.dequeue(),
-            adyacentes = grafoCompleto.adyacentByNode(actual, ordernamientoPorPeso), // parte golosa: odenamiento por el mas cercano.
-            noVisitados = adyacentes.filter(aristaAdyacente => !visitados[aristaAdyacente.getNodeTo]), // filtro los adyacentes que no estan visitados
-            max = ((noVisitados.length - 1) >= 5) ? 5 : (noVisitados.length - 1), // se elijen posiciones entre los primeros 5 o menos.
-            posicionRandom = Math.floor(Math.random() * (max - 0 + 1) + 0), // elijo una posicion aleatoria
-            arista = noVisitados[posicionRandom]; // uso esa arista
+            adyacentes = grafoCompleto.adyacentByNode(actual, ordernamiento), // parte golosa.
+            noVisitados = adyacentes.filter(aristaAdyacente => !visitados[aristaAdyacente.getNodeTo]); // filtro los adyacentes que no estan visitados
 
-        if (arista) {
+        let arista = noVisitados[0]; // Selecciono el primero, ya que estan ordenados de alguna manera golosa.
+        if(aleatorizacion){ // Si recibimos una funcion para aleatorizar, la usamos.
+            arista = aleatorizacion(noVisitados);
+        }
+
+        if (arista) { // Puede que no exista una arista cuando ya estamos en el ultimo nodo.
             queue.enqueue(arista.getNodeTo);
             visitados[arista.getNodeTo] = true;
             predecesores[arista.getNodeTo] = arista.getNodeFrom;

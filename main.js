@@ -11,7 +11,17 @@ const grafo01 = [
     [Infinity, Infinity, 1, Infinity,3, 0],
 ];
 
-let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmoGoloso(grafo01);
+// Funcion para ordenar por peso.
+const ordernamientoPorPeso = (arista1, arista2) => arista1.weight - arista2.weight;
+
+// Funcion para ordenar aleatorizar la seleccion de nodo siguiente.
+const aleatorizacionDeHeuristica = (cantidadAContemplar) => (aristas) => {
+    let max = ((aristas.length - 1) >= cantidadAContemplar) ? cantidadAContemplar : (aristas.length - 1), // se elijen posiciones entre los primeros 'cantidadAContemplar' o menos.
+        posicionRandom = Math.floor(Math.random() * (max - 0 + 1) + 0); // elijo una posicion aleatoria
+    return aristas[posicionRandom];
+}
+
+let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmoGoloso(grafo01, 0, ordernamientoPorPeso, aleatorizacionDeHeuristica(5));
 console.log("GRAFO COMPLETO");
 grafoCompleto.print();
 console.log("ALGORITMO GOLOSO");

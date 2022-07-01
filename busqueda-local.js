@@ -1,26 +1,37 @@
 
-export const intercambiarConsecutivos = (grafo ,listaAristas) => {
-    let a0 = listaAristas[0],
-        a1 = listaAristas[1],
-        a2 = listaAristas[2],
-        pesoARestar = a0.getWeight + a2.getWeight;
+export const intercambiarConsecutivos = (grafo , nuevasAristas, posicionIntercambiar) => {
+    // Sabiendo que 'posicionIntercambiar' no va a ser la primera ni la ultima
+    // podemos restar y sumar sin problemas.
+    let anterior = nuevasAristas[posicionIntercambiar-1],
+        actual = nuevasAristas[posicionIntercambiar],
+        siguiente = nuevasAristas[posicionIntercambiar+1],
+        pesoARestar = anterior.getWeight + siguiente.getWeight;
 
-    let new0 = grafo.getEdge(a0.getNodeFrom, a2.getNodeFrom),
-        new1 = grafo.getEdge(a2.getNodeFrom, a1.getNodeFrom),
-        new2 = grafo.getEdge(a1.getNodeFrom, a2.getNodeTo),
-        pesoASumar = new0.getWeight + new2.getWeight;
+    // Obtenemos las nuevas aristas.
+    let newAnterior = grafo.getEdge(anterior.getNodeFrom, siguiente.getNodeFrom),
+        newActual = grafo.getEdge(siguiente.getNodeFrom, actual.getNodeFrom),
+        newSiguiente = grafo.getEdge(actual.getNodeFrom, siguiente.getNodeTo),
+        pesoASumar = newAnterior.getWeight + newSiguiente.getWeight;
 
-    return { aristasIntercambiadas: [new0, new1, new2], pesoARestar, pesoASumar };
+    // Intercambiamos las aristas.
+    nuevasAristas[posicionIntercambiar-1] = newAnterior;
+    nuevasAristas[posicionIntercambiar] = newActual;
+    nuevasAristas[posicionIntercambiar+1] = newSiguiente;
+
+    return { nuevasAristas, pesoARestar, pesoASumar };
 }
 
 export const busquedaLocal = (grafo, aristas, pesoTotal) => {
 
-    let aristasACambiar = aristas.slice(0, 3),
-        resto = aristas.slice(3, aristas.length),
-        { aristasIntercambiadas, pesoARestar, pesoASumar } = intercambiarConsecutivos(grafo, aristasACambiar);
+    // Hacemos copia de las aristas.
+    let aristasACambiar = [...aristas];
+    let { nuevasAristas, pesoARestar, pesoASumar } = intercambiarConsecutivos(grafo, aristasACambiar, 1);
+    let pesoNuevo = ((pesoTotal-pesoARestar)+pesoASumar);
 
-    // for(let i = 0; i < 3; i++){
-    // }
-
-    return { vecino: [...aristasIntercambiadas, ...resto], pesoTotal: ((pesoTotal-pesoARestar)+pesoASumar) }
+    // Elegimos el mejor de los dos.
+    if(pesoNuevo < pesoTotal){
+        return { resultado: nuevasAristas, pesoTotal: pesoNuevo, vecino: true };
+    }
+    
+    return { resultado: aristas, pesoTotal: pesoTotal, vecino: false };
 }
