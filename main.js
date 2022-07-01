@@ -1,3 +1,4 @@
+import { busquedaLocal } from "./busqueda-local.js";
 import { algoritmoGoloso } from "./heuristica-golosa.js";
 
 // filas x columnas
@@ -10,10 +11,12 @@ const grafo01 = [
     [Infinity, Infinity, 1, Infinity,3, 0],
 ];
 
-let { grafoCompleto, resultado, predecesores, visitados } = algoritmoGoloso(grafo01);
+let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmoGoloso(grafo01);
 console.log("GRAFO COMPLETO");
 grafoCompleto.print();
 console.log("ALGORITMO GOLOSO");
 console.log("Resultado: ",  resultado);
+console.log("Peso total: ", pesoTotal);
 console.log("Predecesores: ", predecesores);
 console.log("Visitados: ", visitados);
+console.log("BUSQUEDA LOCAL: ", busquedaLocal(grafoCompleto, resultado, pesoTotal));

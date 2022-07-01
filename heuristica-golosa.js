@@ -1,13 +1,21 @@
 import { GraphWM } from "./classes/graph-wm.js";
 import { Queue } from "./classes/queue.js";
 
+// Funcion para ordenar por peso.
 const ordernamientoPorPeso = (arista1, arista2) => arista1.weight - arista2.weight;
 
+// Heuristica golosa.
+// Parametros: 
+// - grafo inicial: matriz.
+// - vertice inicial: numero.
+//  TODO:
+// - aleatorizacion: funcion que elije la proxima arista.
 export const algoritmoGoloso = (grafo, verticeInicial = 0) => {
     let grafoCompleto = new GraphWM(grafo),
         resultado = [],
         visitados = GraphWM.newVector(grafoCompleto.numberNodes, false),
         predecesores = GraphWM.newVector(grafoCompleto.numberNodes, verticeInicial),
+        pesoTotal = 0,
         queue = new Queue();
 
     queue.enqueue(verticeInicial);
@@ -25,13 +33,17 @@ export const algoritmoGoloso = (grafo, verticeInicial = 0) => {
             queue.enqueue(arista.getNodeTo);
             visitados[arista.getNodeTo] = true;
             predecesores[arista.getNodeTo] = arista.getNodeFrom;
+            pesoTotal += arista.getWeight;
             resultado.push(arista);
         }
     }
 
     // Se agrega ultima arista, desde el ultimo nodo visitado hasta el incial.
-    let ultimo = resultado[(grafoCompleto.numberNodes -2)];
-    resultado.push(grafoCompleto.getEdge(ultimo.getNodeTo, verticeInicial));
+    let ultimo = resultado[(grafoCompleto.numberNodes -2)],
+        ultimaArista = grafoCompleto.getEdge(ultimo.getNodeTo, verticeInicial);
 
-    return { grafoCompleto, resultado, predecesores, visitados };
+    pesoTotal += ultimaArista.getWeight;
+    resultado.push(ultimaArista);
+
+    return { grafoCompleto, resultado, pesoTotal, predecesores, visitados };
 }
