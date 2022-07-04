@@ -4,9 +4,8 @@
 1. Proponer un algoritmo goloso para el problema del viajante de comercio.
 
 ```javascript
-export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento = null) => {
-    let grafoCompleto = new GraphWM(grafo),
-        resultado = [],
+export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0) => {
+    let resultado = [],
         visitados = GraphWM.newVector(grafoCompleto.numberNodes, false),
         predecesores = GraphWM.newVector(grafoCompleto.numberNodes, verticeInicial),
         pesoTotal = 0,
@@ -17,7 +16,7 @@ export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento = null)
 
     while(!queue.isEmpty()){
         let actual = queue.dequeue(),
-            adyacentes = grafoCompleto.adyacentByNode(actual, ordernamiento); // parte golosa
+            adyacentes = grafoCompleto.adyacentByNode(actual); // parte golosa
 
         for (let arista of adyacentes) {
             let primero = arista;
@@ -49,7 +48,10 @@ export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento = null)
 // Funcion para ordenar por peso.
 const ordernamientoPorPeso = (arista1, arista2) => arista1.weight - arista2.weight;
 
-let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmoGoloso(grafo01, 0, ordernamientoPorPeso)
+// Se crea una sola vez el grafo completo con todos los datos necesarios.
+const grafoCompletoOrdenado = new GraphWM(grafo01, ordernamientoPorPeso);
+
+let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmoGoloso(grafoCompletoOrdenado, 0)
 ```
 
 2. Aleatorizar el algoritmo anterior.
