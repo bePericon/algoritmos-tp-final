@@ -1,5 +1,12 @@
 # ALGORITMOS - Trabajo Practico Final
 
+## Preparar entorno
+
+- Instalar las dependencias: 
+```
+$ npm install
+```
+
 ## Metaheuristica: GRASP
 
 ### Enunciado

@@ -1,13 +1,19 @@
 import { busquedaLocal } from "./busqueda-local.js";
 import { GraphWM } from "./classes/graph-wm.js";
 import { algoritmoGoloso } from "./heuristica-golosa.js";
-import { getListGraph } from "./parserGraphXML.js";
+
+// filas x columnas
+const grafo01 = [
+    [0, 3, 2, 4, Infinity,Infinity],
+    [3, 0, 2, Infinity, 4, Infinity],
+    [2, 2, 0, Infinity, 2, 1],
+    [4, Infinity, Infinity, 0, Infinity, Infinity],
+    [Infinity, 4, 2, Infinity, 0, 3],
+    [Infinity, Infinity, 1, Infinity,3, 0],
+];
 
 // Funcion para ordenar por peso.
 const ordernamientoPorPeso = (arista1, arista2) => arista1.weight - arista2.weight;
-
-// Se crea una sola vez el grafo completo con todos los datos necesarios.
-const grafoCompletoOrdenado = getListGraph(ordernamientoPorPeso)[0];
 
 // Funcion para ordenar aleatorizar la seleccion de nodo siguiente.
 const aleatorizacionDeHeuristica = (porcentajeAContemplar) => (aristas) => {
@@ -17,6 +23,9 @@ const aleatorizacionDeHeuristica = (porcentajeAContemplar) => (aristas) => {
         posicionRandom = Math.floor(Math.random() * (max - 0 + 1) + 0); // elijo una posicion aleatoria
     return aristas[posicionRandom];
 }
+
+// Se crea una sola vez el grafo completo con todos los datos necesarios.
+const grafoCompletoOrdenado = new GraphWM(grafo01, ordernamientoPorPeso);
 
 let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = 
     algoritmoGoloso(grafoCompletoOrdenado, 0, aleatorizacionDeHeuristica(5));
