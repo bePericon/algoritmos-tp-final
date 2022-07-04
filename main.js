@@ -16,8 +16,10 @@ const grafo01 = [
 const ordernamientoPorPeso = (arista1, arista2) => arista1.weight - arista2.weight;
 
 // Funcion para ordenar aleatorizar la seleccion de nodo siguiente.
-const aleatorizacionDeHeuristica = (cantidadAContemplar) => (aristas) => {
-    let max = ((aristas.length - 1) >= cantidadAContemplar) ? cantidadAContemplar : (aristas.length - 1), // se elijen posiciones entre los primeros 'cantidadAContemplar' o menos.
+const aleatorizacionDeHeuristica = (porcentajeAContemplar) => (aristas) => {
+    let cantidadAContemplar = Math.floor((aristas.length * porcentajeAContemplar)/100);
+    // se elijen posiciones entre los primeros 'cantidadAContemplar' o menos.
+    let max = ((aristas.length - 1) >= cantidadAContemplar) ? cantidadAContemplar : (aristas.length - 1),
         posicionRandom = Math.floor(Math.random() * (max - 0 + 1) + 0); // elijo una posicion aleatoria
     return aristas[posicionRandom];
 }
@@ -27,7 +29,7 @@ const grafoCompletoOrdenado = new GraphWM(grafo01, ordernamientoPorPeso);
 
 let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = 
     algoritmoGoloso(grafoCompletoOrdenado, 0, aleatorizacionDeHeuristica(5));
-    
+
 console.log("GRAFO COMPLETO");
 grafoCompleto.print();
 console.log("ALGORITMO GOLOSO");

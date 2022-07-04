@@ -103,11 +103,11 @@ export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, ordernamiento
 const ordernamientoPorPeso = (arista1, arista2) => arista1.weight - arista2.weight;
 
 // Funcion para ordenar aleatorizar la seleccion de nodo siguiente.
-const aleatorizacionDeHeuristica = (cantidadAContemplar) => (aristas) => {
+const aleatorizacionDeHeuristica = (porcentajeAContemplar) => (aristas) => {
+    let cantidadAContemplar = Math.floor((aristas.length * porcentajeAContemplar)/100);
     // se elijen posiciones entre los primeros 'cantidadAContemplar' o menos.
-    let max = ((aristas.length - 1) >= cantidadAContemplar) ? cantidadAContemplar : (aristas.length - 1);
-    // elijo una posicion aleatoria
-    let posicionRandom = Math.floor(Math.random() * (max - 0 + 1) + 0); 
+    let max = ((aristas.length - 1) >= cantidadAContemplar) ? cantidadAContemplar : (aristas.length - 1),
+        posicionRandom = Math.floor(Math.random() * (max - 0 + 1) + 0); // elijo una posicion aleatoria
     return aristas[posicionRandom];
 }
 
