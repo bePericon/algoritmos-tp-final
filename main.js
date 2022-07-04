@@ -29,4 +29,4 @@ console.log("Resultado: ",  resultado);
 console.log("Peso total: ", pesoTotal);
 console.log("Predecesores: ", predecesores);
 console.log("Visitados: ", visitados);
-console.log("BUSQUEDA LOCAL: ", busquedaLocal(grafoCompleto, resultado, pesoTotal));
+console.log("BUSQUEDA LOCAL: ", busquedaLocal(grafoCompleto, resultado, pesoTotal , { cantidadIteraciones: 100, porcentajeDeCorte: 5 }));
