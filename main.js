@@ -1,4 +1,5 @@
 import { busquedaLocal } from "./busqueda-local.js";
+import { GraphWM } from "./classes/graph-wm.js";
 import { algoritmoGoloso } from "./heuristica-golosa.js";
 
 // filas x columnas
@@ -21,7 +22,12 @@ const aleatorizacionDeHeuristica = (cantidadAContemplar) => (aristas) => {
     return aristas[posicionRandom];
 }
 
-let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmoGoloso(grafo01, 0, ordernamientoPorPeso, aleatorizacionDeHeuristica(5));
+// Se crea una sola vez el grafo completo con todos los datos necesarios.
+const grafoCompletoOrdenado = new GraphWM(grafo01, ordernamientoPorPeso);
+
+let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = 
+    algoritmoGoloso(grafoCompletoOrdenado, 0, aleatorizacionDeHeuristica(5));
+    
 console.log("GRAFO COMPLETO");
 grafoCompleto.print();
 console.log("ALGORITMO GOLOSO");

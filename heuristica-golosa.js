@@ -6,9 +6,8 @@ import { Queue } from "./classes/queue.js";
 // - grafo inicial: matriz.
 // - vertice inicial: numero.
 // - aleatorizacion: funcion que elije la proxima arista.
-export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento= null, aleatorizacion = null) => {
-    let grafoCompleto = new GraphWM(grafo),
-        resultado = [],
+export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, ordernamiento= null, aleatorizacion = null) => {
+    let resultado = [],
         visitados = GraphWM.newVector(grafoCompleto.numberNodes, false),
         predecesores = GraphWM.newVector(grafoCompleto.numberNodes, verticeInicial),
         pesoTotal = 0,
@@ -19,7 +18,7 @@ export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento= null, 
 
     while (!queue.isEmpty()) {
         let actual = queue.dequeue(),
-            adyacentes = grafoCompleto.adyacentByNode(actual, ordernamiento), // parte golosa.
+            adyacentes = grafoCompleto.adyacentByNode(actual),// parte golosa, adyacentes ya ordenados.
             noVisitados = adyacentes.filter(aristaAdyacente => !visitados[aristaAdyacente.getNodeTo]); // filtro los adyacentes que no estan visitados
 
         let arista = noVisitados[0]; // Selecciono el primero, ya que estan ordenados de alguna manera golosa.

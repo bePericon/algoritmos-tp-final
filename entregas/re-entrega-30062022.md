@@ -55,9 +55,8 @@ let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmo
 2. Aleatorizar el algoritmo anterior.
 
 ```javascript
-export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento = null, aleatorizacion = null) => {
-    let grafoCompleto = new GraphWM(grafo),
-        resultado = [],
+export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, ordernamiento= null, aleatorizacion = null) => {
+    let resultado = [],
         visitados = GraphWM.newVector(grafoCompleto.numberNodes, false),
         predecesores = GraphWM.newVector(grafoCompleto.numberNodes, verticeInicial),
         pesoTotal = 0,
@@ -68,10 +67,9 @@ export const algoritmoGoloso = (grafo, verticeInicial = 0, ordernamiento = null,
 
     while (!queue.isEmpty()) {
         let actual = queue.dequeue(),
-            adyacentes = grafoCompleto.adyacentByNode(actual, ordernamientoPorPeso), // parte golosa.
-            noVisitados = adyacentes.filter(aristaAdyacente => !visitados[aristaAdyacente.getNodeTo]); // filtro los adyacentes que no estan visitados
+            adyacentes = grafoCompleto.adyacentByNode(actual);// parte golosa.
 
-        let arista = noVisitados[0]; // Selecciono el primero, ya que estan ordenados de alguna manera golosa.
+        let arista = adyacentes[0]; // Selecciono el primero, ya que estan ordenados de alguna manera golosa.
         if(aleatorizacion){ // Si recibimos una funcion para aleatorizar, la usamos.
             arista = aleatorizacion(noVisitados);
         }
@@ -111,7 +109,11 @@ const aleatorizacionDeHeuristica = (cantidadAContemplar) => (aristas) => {
     return aristas[posicionRandom];
 }
 
-let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = algoritmoGoloso(grafo01, 0, ordernamientoPorPeso, aleatorizacionDeHeuristica(5));
+// Se crea una sola vez el grafo completo con todos los datos necesarios.
+const grafoCompletoOrdenado = new GraphWM(grafo01, ordernamientoPorPeso);
+
+let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = 
+    algoritmoGoloso(grafoCompletoOrdenado, 0, aleatorizacionDeHeuristica(5));
 ```
 
 3. Proponer un algoritmo de búsqueda local para el problema del viajante de comercio.
@@ -193,7 +195,7 @@ export const busquedaLocal = (grafo, aristas, pesoTotal, { cantidadIteraciones }
 
 ```javascript
 let { grafoCompleto, resultado, pesoTotal, predecesores, visitados } = 
-    algoritmoGoloso(grafo01, 0, ordernamientoPorPeso, aleatorizacionDeHeuristica(5));
+    algoritmoGoloso(grafo01, 0, aleatorizacionDeHeuristica(5));
 
 busquedaLocal(grafoCompleto, resultado, pesoTotal , { cantidadIteraciones: 100 })
 ```
