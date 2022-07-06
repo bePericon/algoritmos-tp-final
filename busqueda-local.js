@@ -32,12 +32,12 @@ const buscarVecino = (grafo, aristas, pesoTotal, posicionIntercambiar) => {
     }
 
     return { resultado: aristas, peso: pesoTotal, vecino: false };
-
 }
 
-export const busquedaLocal = (grafo, aristas, pesoTotal, { cantidadIteraciones }) => {
+export const busquedaLocal = (grafo, aristas, pesoTotal, { cantidadIteraciones, porcentajeMinimaDeMejora }) => {
     // Buscar vecino mejor
     let encontreVecinoMejor = false,
+        mejorPorcentajeDeDisminucion = 0,
         mejorResultado = aristas,
         mejorPeso = pesoTotal,
         contador = 0,
@@ -50,11 +50,17 @@ export const busquedaLocal = (grafo, aristas, pesoTotal, { cantidadIteraciones }
         contador++;
         posicionIntercambiar++;
 
+        // Porcentaje de disminucion.
+        let diferencia = mejorPeso - peso,
+            porcentajeDeDisminucion = (diferencia / mejorPeso) * 100;
+
         encontreVecinoMejor = 
-            (contador >= cantidadIteraciones) // ya busque mas de 'cantidadIteraciones' vecinos.
+            (contador > cantidadIteraciones) &&// ya busque mas de 'cantidadIteraciones' vecinos
+            (porcentajeDeDisminucion < porcentajeMinimaDeMejora); // y el porcentaje es mayor al 'porcentajeMinimaDeMejora', entonces corto.
 
         mejorResultado = resultado;
         mejorPeso = peso;
+        mejorPorcentajeDeDisminucion = Math.max(mejorPorcentajeDeDisminucion, porcentajeDeDisminucion);
 
         // Reiciamos si estamos en la ultima posicion y no encontre vecino mejor.
         if (posicionIntercambiar === posicionParaReiniciar && !encontreVecinoMejor) {
@@ -64,6 +70,6 @@ export const busquedaLocal = (grafo, aristas, pesoTotal, { cantidadIteraciones }
         }
     }
 
-    return { aristas: mejorResultado, pesoTotal: mejorPeso, contador: contador };
+    return { aristas: mejorResultado, peso: mejorPeso, contador: contador, porcentaje: mejorPorcentajeDeDisminucion };
 
 }

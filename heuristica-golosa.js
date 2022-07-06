@@ -1,15 +1,15 @@
-import { GraphWM } from "./classes/graph-wm.js";
+import { GraphXML } from "./classes/graph-xml.js";
 import { Queue } from "./classes/queue.js";
 
 // Heuristica golosa.
 // Parametros: 
-// - grafo inicial: matriz.
+// - grafo inicial: grafo completo.
 // - vertice inicial: numero.
 // - aleatorizacion: funcion que elije la proxima arista.
-export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, ordernamiento= null, aleatorizacion = null) => {
+export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, aleatorizacion = null) => {
     let resultado = [],
-        visitados = GraphWM.newVector(grafoCompleto.numberNodes, false),
-        predecesores = GraphWM.newVector(grafoCompleto.numberNodes, verticeInicial),
+        visitados = GraphXML.newVector(grafoCompleto.numberNodes, false),
+        predecesores = GraphXML.newVector(grafoCompleto.numberNodes, verticeInicial),
         pesoTotal = 0,
         queue = new Queue();
 

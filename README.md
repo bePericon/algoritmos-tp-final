@@ -32,3 +32,16 @@ un archivo de texto plano con un circuito hamiltoniano y su valor.
 6. Presentar un gráco de scoring contra la cantidad de iteraciones para baterías de distintas instancias, que permita
 decidir una cantidad de iteraciones que ayude a encontrar un valor cercano al óptimo sin desperdiciar tiempo de
 cómputo.
+
+Grafico chico:
+
+valor de recorrido
+cantidad de iteraciones de GRASP
+
+Por cada iteracion nos tiene que devolver un valor, entonces cuando se plancha es la cantidad de iteraciones 
+que vamos a usar en el grafico grande.
+
+Grafico grande: 
+
+cantidad de iteraciones GRASP hasta que se planche
+cantidad de nodos del grafo

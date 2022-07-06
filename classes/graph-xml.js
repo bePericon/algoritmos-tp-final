@@ -23,8 +23,7 @@ export class GraphXML {
                 return new Edge(index, Number.parseInt(ed.$t),
                     Number.parseFloat(ed.cost) /* ed.cost  en que tipo esta? */
                 );
-            })
-            edges.push(new Edge(index, index, 0));
+            });
             if (sortAdjacents) edges = edges.sort(sortAdjacents);
             return edges;
         });
