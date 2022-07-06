@@ -1,6 +1,16 @@
 import { busquedaLocal } from "./busqueda-local.js";
 import { algoritmoGoloso } from "./heuristica-golosa.js";
 
+/* 
+    ORDEN DE COMPLEJIDAD: grasp
+
+    Aunque depende de la cantidad de iteraciones que se hayan configurado, 
+    pero este numero seria una constante multiplicando el orden siguiente:
+
+    goloso + busqueda local
+
+    O(nˆ2) + O(m * n-1) => O(nˆ2) + O(mˆ2) =>  O(2nˆ2)
+*/
 export const grasp = ({
     grafoCompletoOrdenado,
     iteracionesMaximas,
@@ -16,29 +26,33 @@ export const grasp = ({
     console.log(">>> MEJORES VALORES <<<");
     while (cantidadIteraciones < iteracionesMaximas) {
         let { resultado, pesoTotal } =
-            algoritmoGoloso(grafoCompletoOrdenado, 0, aleatorizacionDeHeuristica);
+            algoritmoGoloso({
+                grafo: grafoCompletoOrdenado, 
+                verticeInicial: 0,
+                aleatorizacion: aleatorizacionDeHeuristica
+            });
 
-        let { aristas, peso } = 
-            busquedaLocal(
-                grafoCompletoOrdenado, 
-                resultado, 
-                pesoTotal , 
-                { cantidadIteraciones: cantidadIteracionesBL, porcentajeMinimaDeMejora: porcentajeMinimaDeMejoraBL }
-            );
+        let { resultadoEncontrado, pesoEncontrado } = 
+            busquedaLocal({ 
+                grafo: grafoCompletoOrdenado,
+                aristas: resultado,
+                peso: pesoTotal,
+                configuracion: { cantidadIteraciones: cantidadIteracionesBL, porcentajeMinimaDeMejora: porcentajeMinimaDeMejoraBL }
+            });
 
         // Primer iteracion.
         if(cantidadIteraciones === 0){
-            mejorResultado = aristas;
-            mejorPeso = peso;
+            mejorResultado = resultadoEncontrado;
+            mejorPeso = pesoEncontrado;
 
             // console.log("Primer resultado: ", aristas);
             // console.log("Primer peso: ", peso);
         }
 
         // Me quedo siempre con el mejor.
-        if(mejorPeso > peso){
-            mejorResultado = aristas;
-            mejorPeso = peso;
+        if(mejorPeso > pesoEncontrado){
+            mejorResultado = resultadoEncontrado;
+            mejorPeso = pesoEncontrado;
         }
 
         // printCadaTantasIteraciones

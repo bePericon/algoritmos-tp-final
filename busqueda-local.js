@@ -1,75 +1,107 @@
-
-const intercambiarConsecutivos = (grafo, nuevasAristas, posicionIntercambiar) => {
+/* 
+    ORDEN DE COMPLEJIDAD: intercambiarConsecutivos
+    O(1)
+*/
+const intercambiarConsecutivos = ({ grafo, aristas, posicionIntercambiar }) => {
     // Sabiendo que 'posicionIntercambiar' no va a ser la primera ni la ultima
     // podemos restar y sumar sin problemas.
-    let anterior = nuevasAristas[posicionIntercambiar - 1],
-        actual = nuevasAristas[posicionIntercambiar],
-        siguiente = nuevasAristas[posicionIntercambiar + 1],
+    let anterior = aristas[posicionIntercambiar - 1],
+        actual = aristas[posicionIntercambiar],
+        siguiente = aristas[posicionIntercambiar + 1],
         pesoARestar = anterior.getWeight + siguiente.getWeight;
 
     // Obtenemos las nuevas aristas.
-    let newAnterior = grafo.getEdge(anterior.getNodeFrom, siguiente.getNodeFrom),
-        newActual = grafo.getEdge(siguiente.getNodeFrom, actual.getNodeFrom),
+    let newAnterior = grafo.getEdge(anterior.getNodeFrom, actual.getNodeTo),
+        newActual = grafo.getEdge(actual.getNodeTo, actual.getNodeFrom),
         newSiguiente = grafo.getEdge(actual.getNodeFrom, siguiente.getNodeTo),
         pesoASumar = newAnterior.getWeight + newSiguiente.getWeight;
 
     // Intercambiamos las aristas.
-    nuevasAristas[posicionIntercambiar - 1] = newAnterior;
-    nuevasAristas[posicionIntercambiar] = newActual;
-    nuevasAristas[posicionIntercambiar + 1] = newSiguiente;
+    aristas[posicionIntercambiar - 1] = newAnterior;
+    aristas[posicionIntercambiar] = newActual;
+    aristas[posicionIntercambiar + 1] = newSiguiente;
 
-    return { nuevasAristas, pesoARestar, pesoASumar };
+    return { nuevasAristas: aristas, pesoARestar, pesoASumar };
 }
 
-const buscarVecino = (grafo, aristas, pesoTotal, posicionIntercambiar) => {
+/* 
+    ORDEN DE COMPLEJIDAD: buscarVecino
+
+    Al hacer la copia de las aristas estariamos haciendo un recorrido en las aristas,
+    y el intercambiar es de O(1), entonces seria:
+
+    O(m)
+*/
+const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
     // Hacemos copia de las aristas.
     let aristasACambiar = [...aristas],
-        { nuevasAristas, pesoARestar, pesoASumar } = intercambiarConsecutivos(grafo, aristasACambiar, posicionIntercambiar),
-        pesoNuevo = ((pesoTotal - pesoARestar) + pesoASumar);
+        { nuevasAristas, pesoARestar, pesoASumar } = 
+            intercambiarConsecutivos({
+                grafo: grafo, 
+                aristas: aristasACambiar, 
+                posicionIntercambiar: posicionIntercambiar
+            }),
+        pesoNuevo = ((peso - pesoARestar) + pesoASumar);
 
-    if (pesoNuevo < pesoTotal) {
-        return { resultado: nuevasAristas, peso: pesoNuevo, vecino: true };
+    if (pesoNuevo < peso) {
+        return { resultadoEncontrado: nuevasAristas, pesoEncontrado: pesoNuevo };
     }
 
-    return { resultado: aristas, peso: pesoTotal, vecino: false };
+    return { resultadoEncontrado: aristas, pesoEncontrado: peso };
 }
 
-export const busquedaLocal = (grafo, aristas, pesoTotal, { cantidadIteraciones, porcentajeMinimaDeMejora }) => {
+
+/* 
+    ORDEN DE COMPLEJIDAD: busquedaLocal
+
+    Aunque depende de la cantidad de iteraciones que se hayan configurado, 
+    pero este numero seria una constante multiplicando el orden siguiente:
+
+    O(m) * O(n-1)  => O(m * n-1)
+*/
+export const busquedaLocal = ({ grafo, aristas, peso, configuracion }) => {
+    let { cantidadIteraciones = 3, porcentajeMinimaDeMejora = 0 } = configuracion;
+
     // Buscar vecino mejor
     let encontreVecinoMejor = false,
         mejorPorcentajeDeDisminucion = 0,
         mejorResultado = aristas,
-        mejorPeso = pesoTotal,
+        mejorPeso = peso,
         contador = 0,
         posicionIntercambiar = 1,
-        posicionParaReiniciar = aristas.length - 1; // No intercambio con la ultima posicion.
+        posicionParaReiniciar = aristas.length - 2; // No intercambio con la ultima posicion.
 
     while (!encontreVecinoMejor) {
-        let { resultado, peso, vecino } = buscarVecino(grafo, mejorResultado, mejorPeso, posicionIntercambiar);
+        let { resultadoEncontrado, pesoEncontrado } = buscarVecino({
+            grafo: grafo, 
+            aristas: mejorResultado, 
+            peso: mejorPeso, 
+            posicionIntercambiar: posicionIntercambiar
+        });
 
         contador++;
         posicionIntercambiar++;
 
         // Porcentaje de disminucion.
-        let diferencia = mejorPeso - peso,
+        let diferencia = mejorPeso - pesoEncontrado,
             porcentajeDeDisminucion = (diferencia / mejorPeso) * 100;
 
         encontreVecinoMejor = 
             (contador > cantidadIteraciones) &&// ya busque mas de 'cantidadIteraciones' vecinos
             (porcentajeDeDisminucion < porcentajeMinimaDeMejora); // y el porcentaje es mayor al 'porcentajeMinimaDeMejora', entonces corto.
 
-        mejorResultado = resultado;
-        mejorPeso = peso;
+        mejorResultado = resultadoEncontrado;
+        mejorPeso = pesoEncontrado;
         mejorPorcentajeDeDisminucion = Math.max(mejorPorcentajeDeDisminucion, porcentajeDeDisminucion);
 
         // Reiciamos si estamos en la ultima posicion y no encontre vecino mejor.
         if (posicionIntercambiar === posicionParaReiniciar && !encontreVecinoMejor) {
             posicionIntercambiar = 1;
             mejorResultado = aristas;
-            mejorPeso = pesoTotal;
+            mejorPeso = peso;
         }
     }
 
-    return { aristas: mejorResultado, peso: mejorPeso, contador: contador, porcentaje: mejorPorcentajeDeDisminucion };
+    return { resultadoEncontrado: mejorResultado, pesoEncontrado: mejorPeso };
 
 }

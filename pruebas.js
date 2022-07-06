@@ -34,7 +34,11 @@ const aleatorizacionDeHeuristica = (porcentajeAContemplar) => (aristas) => {
 // let grafoCompletoOrdenado = new GraphWM(grafo01, ordernamientoPorPeso);
 
 let { resultado, pesoTotal } =
-    algoritmoGoloso(grafoCompletoOrdenado, 0, aleatorizacionDeHeuristica(50));
+    algoritmoGoloso(grafoCompletoOrdenado, 0, aleatorizacionDeHeuristica(10));
+
+
+console.log("GOLOSO aristas:", resultado)
+console.log(`GOLOSO peso: ${pesoTotal}`)
 
     
 let bl = 
@@ -46,9 +50,6 @@ let bl =
     });
     
 // grafoCompletoOrdenado.print()
-
-console.log("GOLOSO aristas:", resultado)
-console.log(`GOLOSO peso: ${pesoTotal}`)
 
 console.log("BL aristas:", bl.resultadoEncontrado)
 console.log(`BL peso: ${bl.pesoEncontrado}`)

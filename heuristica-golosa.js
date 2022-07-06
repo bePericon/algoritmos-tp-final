@@ -1,15 +1,25 @@
 import { GraphXML } from "./classes/graph-xml.js";
 import { Queue } from "./classes/queue.js";
 
-// Heuristica golosa.
-// Parametros: 
-// - grafo inicial: grafo completo.
-// - vertice inicial: numero.
-// - aleatorizacion: funcion que elije la proxima arista.
-export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, aleatorizacion = null) => {
+/* 
+    ORDEN DE COMPLEJIDAD: algoritmoGoloso
+
+    Sin tener en cuenta la creacion de vectores.
+    Sin tener en cuenta el filtrado de los adyacentes en cada iteracion.
+    Es el siguiente:
+
+    O(n)
+
+    Teniendo en cuenta la creacion de vectores y 
+    el filtrado de los adyacentes en cada iteracion.
+    Es el siguiente:
+
+    O(2n + nˆ2) =>  O(nˆ2)
+*/
+export const algoritmoGoloso = ({ grafo, verticeInicial = 0, aleatorizacion = null }) => {
     let resultado = [],
-        visitados = GraphXML.newVector(grafoCompleto.numberNodes, false),
-        predecesores = GraphXML.newVector(grafoCompleto.numberNodes, verticeInicial),
+        visitados = GraphXML.newVector(grafo.numberNodes, false),
+        predecesores = GraphXML.newVector(grafo.numberNodes, verticeInicial),
         pesoTotal = 0,
         queue = new Queue();
 
@@ -18,7 +28,7 @@ export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, aleatorizacio
 
     while (!queue.isEmpty()) {
         let actual = queue.dequeue(),
-            adyacentes = grafoCompleto.adyacentByNode(actual),// parte golosa, adyacentes ya ordenados.
+            adyacentes = grafo.adyacentByNode(actual),// parte golosa, adyacentes ya ordenados.
             noVisitados = adyacentes.filter(aristaAdyacente => !visitados[aristaAdyacente.getNodeTo]); // filtro los adyacentes que no estan visitados
 
         let arista = noVisitados[0]; // Selecciono el primero, ya que estan ordenados de alguna manera golosa.
@@ -36,11 +46,11 @@ export const algoritmoGoloso = (grafoCompleto, verticeInicial = 0, aleatorizacio
     }
 
     // Se agrega ultima arista, desde el ultimo nodo visitado hasta el incial.
-    let ultimo = resultado[(grafoCompleto.numberNodes -2)],
-        ultimaArista = grafoCompleto.getEdge(ultimo.getNodeTo, verticeInicial);
+    let ultimo = resultado[(grafo.numberNodes -2)],
+        ultimaArista = grafo.getEdge(ultimo.getNodeTo, verticeInicial);
 
     pesoTotal += ultimaArista.getWeight;
     resultado.push(ultimaArista);
 
-    return { grafoCompleto, resultado, pesoTotal, predecesores, visitados };
+    return { grafo, resultado, pesoTotal, predecesores, visitados };
 }

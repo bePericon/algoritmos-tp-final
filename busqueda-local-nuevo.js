@@ -8,8 +8,8 @@ const intercambiarConsecutivos = ({ grafo, aristas, posicionIntercambiar }) => {
         pesoARestar = anterior.getWeight + siguiente.getWeight;
 
     // Obtenemos las nuevas aristas.
-    let newAnterior = grafo.getEdge(anterior.getNodeFrom, siguiente.getNodeFrom),
-        newActual = grafo.getEdge(siguiente.getNodeFrom, actual.getNodeFrom),
+    let newAnterior = grafo.getEdge(anterior.getNodeFrom, actual.getNodeTo),
+        newActual = grafo.getEdge(actual.getNodeTo, actual.getNodeFrom),
         newSiguiente = grafo.getEdge(actual.getNodeFrom, siguiente.getNodeTo),
         pesoASumar = newAnterior.getWeight + newSiguiente.getWeight;
 
@@ -33,7 +33,7 @@ const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
         pesoNuevo = ((peso - pesoARestar) + pesoASumar);
 
     // if (pesoNuevo < peso) {
-        return { resultadoEncontrado: nuevasAristas, pesoEncontrado: pesoNuevo };
+    return { resultadoEncontrado: nuevasAristas, pesoEncontrado: pesoNuevo };
     // }
 
     // return { resultadoEncontrado: aristas, pesoEncontrado: peso };
@@ -46,34 +46,48 @@ export const busquedaLocal = ({ grafo, aristas, peso, configuracion }) => {
     let aristasBL = aristas;
     let pesoBL = peso;
 
-    let contador = 0;
-    while (contador < cantidadIteraciones) {
-        let posicionInicial = 1;
-        let posicionNodoActual = 1;
-        let ultimaPosicion = aristas.length - 2;
+    let nuevoVecino =
+        buscarVecino({
+            grafo: grafo,
+            aristas: aristasBL,
+            peso: pesoBL,
+            posicionIntercambiar: 1
+        });
 
-        while (posicionInicial < ultimaPosicion) {
-            while (posicionNodoActual <= ultimaPosicion) {
-                mejorVecino =
-                    buscarVecino({
-                        grafo: grafo,
-                        aristas: aristasBL,
-                        peso: pesoBL,
-                        posicionIntercambiar: posicionNodoActual
-                    });
-
-                posicionNodoActual++;
-            }
-            posicionInicial++;
-        }
-
-        aristasBL = mejorVecino.resultadoEncontrado;
-        pesoBL = mejorVecino.pesoEncontrado;
-
-        contador++;
+    if (nuevoVecino.pesoEncontrado < pesoBL) {
+        mejorVecino = nuevoVecino;
     }
 
-    console.log("CONTADOR!!", contador)
     return mejorVecino;
+
+    // let contador = 0;
+    // while (contador < cantidadIteraciones) {
+    //     let posicionInicial = 1;
+    //     let posicionNodoActual = 1;
+    //     let ultimaPosicion = aristas.length - 2;
+
+    //     while (posicionInicial < ultimaPosicion) {
+    //         while (posicionNodoActual <= ultimaPosicion) {
+    //             mejorVecino =
+    //                 buscarVecino({
+    //                     grafo: grafo,
+    //                     aristas: aristasBL,
+    //                     peso: pesoBL,
+    //                     posicionIntercambiar: posicionNodoActual
+    //                 });
+
+    //             posicionNodoActual++;
+    //         }
+    //         posicionInicial++;
+    //     }
+
+    //     aristasBL = mejorVecino.resultadoEncontrado;
+    //     pesoBL = mejorVecino.pesoEncontrado;
+
+    //     contador++;
+    // }
+
+    // console.log("CONTADOR!!", contador)
+    // return mejorVecino;
 
 }
