@@ -17,20 +17,26 @@ export const grasp = ({
     aleatorizacionDeHeuristica,
     printCadaTantasIteraciones,
     cantidadIteracionesBL,
-    porcentajeMinimaDeMejoraBL
+    porcentajeMinimaDeMejoraBL,
+    logsActivados = false
 }) => {
     let cantidadIteraciones = 0;
     let mejorResultado = [];
     let mejorPeso = 0;
 
-    console.log(">>> MEJORES VALORES <<<");
+    let posibleVertice = 0;
+
+    if(logsActivados) console.log(">>> MEJORES VALORES <<<");
     while (cantidadIteraciones < iteracionesMaximas) {
         let { resultado, pesoTotal } =
             algoritmoGoloso({
                 grafo: grafoCompletoOrdenado, 
-                verticeInicial: 0,
+                verticeInicial: posibleVertice,
                 aleatorizacion: aleatorizacionDeHeuristica
             });
+
+        // posibleVertice++;
+        // if(posibleVertice > grafoCompletoOrdenado.numberNodes -1) posibleVertice = 7;
 
         let { resultadoEncontrado, pesoEncontrado } = 
             busquedaLocal({ 
@@ -44,9 +50,6 @@ export const grasp = ({
         if(cantidadIteraciones === 0){
             mejorResultado = resultadoEncontrado;
             mejorPeso = pesoEncontrado;
-
-            // console.log("Primer resultado: ", aristas);
-            // console.log("Primer peso: ", peso);
         }
 
         // Me quedo siempre con el mejor.
@@ -56,12 +59,12 @@ export const grasp = ({
         }
 
         // printCadaTantasIteraciones
-        if(cantidadIteraciones > 0 && (cantidadIteraciones % printCadaTantasIteraciones === 0)){
+        if(logsActivados && cantidadIteraciones > 0 && (cantidadIteraciones % printCadaTantasIteraciones === 0)){
             console.log(`ITERACION: ${cantidadIteraciones} - PESO: ${mejorPeso}`);
         }
 
         cantidadIteraciones++;
     }
 
-    // console.log("Ultimo resultado: ", mejorResultado);
+    return { mejorResultado, mejorPeso };
 }
