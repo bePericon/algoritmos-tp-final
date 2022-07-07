@@ -50,5 +50,15 @@ Este algoritmo recibe varias configuraciones aparte de la matriz de adjacencia.
 decidir una cantidad de iteraciones que ayude a encontrar un valor cercano al óptimo sin desperdiciar tiempo de
 cómputo.
 
-
 ![Grafico de scoring](./data/grafico.jpg)
+
+Aunque los numeros encontrados no se aproximan a los optimos reales de estos grafos, dejo algunas observaciones de mis pruebas.
+
+Se cumple una 'curva' de crecimiento en la cantidad de iteraciones que son necesarias en GRASP dependiendo de la cantidad de nodos. 
+Este crecimiento tiene grandes saltos al crecer considerablemente la cantidad de nodos, por ejemplo, hay varios puntos de crecimiento bastantes notables. 
+Por ejemplo: entre la cantidad de nodos 76 y 96, como tambien entre 137 y 150. Tambien luego, hay un aumento bastante grande en cantidad de iteraciones necesarias para que no haya mas cambios en el valor encontrado, entre los ultimos tres grafos.
+
+Frente al problema de que los numeros encontrados son bastante grandes frente a los optimos, tengo algunas hipotesis:
+
+Creo que mi algoritmo de busqueda local no esta encontrando mejores vecinos por tener un problema en los intercambios de consecutivos. Pese a intentar cambiar este algoritmo completamente no logre llegar a mejorar los resultados finales, por esta razon opte dejando la solucion actual.
+Otra posibilidad que evalue, pero la verdad no honde en tema, es la conversion de el costo de las aristas al procesar los xml, pero dudo que esto sea el problema mayor.

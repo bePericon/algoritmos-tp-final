@@ -1,6 +1,10 @@
 /* 
     ORDEN DE COMPLEJIDAD: intercambiarConsecutivos
     O(1)
+
+    Nota:
+    El metodo ´getEdge(...)´ en mi caso busca en una lista de adyacencia, entonces seria de O(n).
+    Pero para que esto siga siendo O(1) se deberia tener la matriz de adyacencia (que no esta implementada).
 */
 const intercambiarConsecutivos = ({ grafo, aristas, posicionIntercambiar }) => {
     // Sabiendo que 'posicionIntercambiar' no va a ser la primera ni la ultima

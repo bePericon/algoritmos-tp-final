@@ -1,4 +1,3 @@
-import { floyd } from "../floyd.js";
 import { Edge } from "./edge.js";
 
 /* Graph by Adjacents List */
