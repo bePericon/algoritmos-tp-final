@@ -7,9 +7,12 @@ import { algoritmoGoloso } from "./heuristica-golosa.js";
     Aunque depende de la cantidad de iteraciones que se hayan configurado, 
     pero este numero seria una constante multiplicando el orden siguiente:
 
-    goloso + busqueda local
+    sabiendo que: m = n
 
-    O(nˆ2) + O(m * n-1) => O(nˆ2) + O(mˆ2) =>  O(2nˆ2)
+    (goloso + busqueda local) * #iteraciones
+
+    (O(nˆ2) + O(nˆ2 - n)) * #iteraciones => 
+    O((nˆ2) + (nˆ2 - n) * #iteraciones) =>  O((2nˆ2 - n) * #iteraciones)
 */
 export const grasp = ({
     grafoCompletoOrdenado,

@@ -32,9 +32,11 @@ const intercambiarConsecutivos = ({ grafo, aristas, posicionIntercambiar }) => {
     ORDEN DE COMPLEJIDAD: buscarVecino
 
     Al hacer la copia de las aristas estariamos haciendo un recorrido en las aristas,
-    y el intercambiar es de O(1), entonces seria:
+    siendo estas el mismo numero de nodos, mas el intercambiar que es de O(1), entonces seria:
 
-    O(m)
+    sabiendo que: m = n
+
+    O(n)
 */
 const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
     // Hacemos copia de las aristas.
@@ -61,7 +63,9 @@ const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
     Aunque depende de la cantidad de iteraciones que se hayan configurado, 
     pero este numero seria una constante multiplicando el orden siguiente:
 
-    O(m) * O(n-1)  => O(m * n-1)
+    sabiendo que: m = n
+
+    O(n) * O(n-1)  => O(n * n-1) => O(nˆ2 - n)
 */
 export const busquedaLocal = ({ grafo, aristas, peso, configuracion }) => {
     let { cantidadIteraciones = 3, porcentajeMinimaDeMejora = 0 } = configuracion;
