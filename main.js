@@ -38,7 +38,7 @@ const armarMetricasPorGrafo = (grafo) => {
 listaDeGrafos.forEach(armarMetricasPorGrafo);
 
 
-// const grafo = listaDeGrafos[0];
+// const grafo = listaDeGrafos[23];
 // const grafoNodos = `Grafo ${grafo.nameGraph} tiene: >>> ${grafo.numberNodes} Nodos <<<`;
 // console.log(grafoNodos)
 
@@ -48,7 +48,7 @@ listaDeGrafos.forEach(armarMetricasPorGrafo);
 //         aleatorizacionDeHeuristica: aleatorizacionDeHeuristica(20),
 //         iteracionesMaximas: (grafo.numberNodes * 200),
 //         printCadaTantasIteraciones: (grafo.numberNodes * 2),
-//         cantidadIteracionesBL: 1000,
+//         cantidadIteracionesBL: 100000,
 //         logsActivados: true
 //     });
 
