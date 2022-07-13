@@ -34,8 +34,6 @@ const intercambiarConsecutivos = ({ grafo, aristas, posicionIntercambiar }) => {
     Al hacer la copia de las aristas estariamos haciendo un recorrido en las aristas,
     siendo estas el mismo numero de nodos, mas el intercambiar que es de O(1), entonces seria:
 
-    sabiendo que: m = n
-
     O(n)
 */
 const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
@@ -63,12 +61,10 @@ const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
     Aunque depende de la cantidad de iteraciones que se hayan configurado, 
     pero este numero seria una constante multiplicando el orden siguiente:
 
-    sabiendo que: m = n
-
-    O(n) * O(n-1)  => O(n * n-1) => O(nˆ2 - n)
+    O(n) * O(n-1)  => O(n * n-1) => O(nˆ2 - n) => O(nˆ2)
 */
 export const busquedaLocal = ({ grafo, aristas, peso, configuracion }) => {
-    let { cantidadIteraciones = 3, porcentajeMinimaDeMejora = 0 } = configuracion;
+    let { cantidadIteraciones = 3 } = configuracion;
 
     // Buscar vecino mejor
     let encontreVecinoMejor = false,
@@ -79,7 +75,7 @@ export const busquedaLocal = ({ grafo, aristas, peso, configuracion }) => {
         posicionIntercambiar = 1,
         posicionParaReiniciar = aristas.length - 2; // No intercambio con la ultima posicion.
 
-    while (!encontreVecinoMejor) {
+    while ((contador < cantidadIteraciones)) {
         let { resultadoEncontrado, pesoEncontrado } = buscarVecino({
             grafo: grafo, 
             aristas: mejorResultado, 
@@ -90,20 +86,11 @@ export const busquedaLocal = ({ grafo, aristas, peso, configuracion }) => {
         contador++;
         posicionIntercambiar++;
 
-        // Porcentaje de disminucion.
-        let diferencia = mejorPeso - pesoEncontrado,
-            porcentajeDeDisminucion = (diferencia / mejorPeso) * 100;
-
-        encontreVecinoMejor = 
-            (contador > cantidadIteraciones) &&// ya busque mas de 'cantidadIteraciones' vecinos
-            (porcentajeDeDisminucion < porcentajeMinimaDeMejora); // y el porcentaje es mayor al 'porcentajeMinimaDeMejora', entonces corto.
-
         mejorResultado = resultadoEncontrado;
         mejorPeso = pesoEncontrado;
-        mejorPorcentajeDeDisminucion = Math.max(mejorPorcentajeDeDisminucion, porcentajeDeDisminucion);
 
         // Reiciamos si estamos en la ultima posicion y no encontre vecino mejor.
-        if (posicionIntercambiar === posicionParaReiniciar && !encontreVecinoMejor) {
+        if (posicionIntercambiar === posicionParaReiniciar) {
             posicionIntercambiar = 1;
             mejorResultado = aristas;
             mejorPeso = peso;

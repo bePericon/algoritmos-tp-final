@@ -2,10 +2,12 @@ import { Edge } from "./edge.js";
 
 /* Graph by Adjacents List */
 export class GraphXML {
-    constructor(graph, sortAdjacents = null) {
+    constructor(graph, sortAdjacents = null, name = '', weightOp = 0) {
         this.graph = graph;
         this.n = graph.length;
         this.adjacentsList = this.#createAdjacentsList(sortAdjacents)
+        this.name = name;
+        this.weight = weightOp;
     }
 
     static newVector(n, repeatValue) {
@@ -14,6 +16,14 @@ export class GraphXML {
 
     get numberNodes() {
         return this.n;
+    }
+
+    get nameGraph() {
+        return this.name;
+    }
+
+    get weightOp() {
+        return this.weight;
     }
 
     #createAdjacentsList(sortAdjacents = null) {
