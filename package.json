@@ -2,6 +2,7 @@
     "type": "module",
     "dependencies": {
         "fs": "^0.0.1-security",
+        "microprofiler": "^1.0.4",
         "xml2json": "^0.12.0"
     }
 }

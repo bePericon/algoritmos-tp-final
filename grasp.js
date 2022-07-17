@@ -1,5 +1,6 @@
 import { busquedaLocal } from "./busqueda-local.js";
 import { algoritmoGoloso } from "./heuristica-golosa.js";
+import { startMedition, stopMedition } from './time-medition.js';
 
 /* 
     ORDEN DE COMPLEJIDAD: grasp
@@ -25,6 +26,10 @@ export const grasp = ({
     let mejorPeso = 0;
 
     let posibleVertice = 0;
+
+    /* TIME START */
+    startMedition();
+    /* ********** */
 
     if(logsActivados) console.log(">>> MEJORES VALORES <<<");
     while (cantidadIteraciones < iteracionesMaximas) {
@@ -65,6 +70,10 @@ export const grasp = ({
 
         cantidadIteraciones++;
     }
+
+    /* TIME END */
+    stopMedition(true);
+    /* ********** */
 
     return { mejorResultado, mejorPeso };
 }

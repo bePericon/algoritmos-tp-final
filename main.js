@@ -16,42 +16,42 @@ const aleatorizacionDeHeuristica = (porcentajeAContemplar) => (aristas) => {
 // Lista de grafos ordenados por numero de nodos.
 const listaDeGrafos = getListGraph(ordernamientoPorPeso).sort((grafo1, grafo2) => grafo1.numberNodes - grafo2.numberNodes); 
 
-const armarMetricasPorGrafo = (grafo) => {
-    const grafoNodos = `Grafo actual ${grafo.nameGraph} tiene: >>> ${grafo.numberNodes} Nodos <<<`;
-    console.log(grafoNodos)
-
-    const { mejorResultado, mejorPeso } = 
-        grasp({
-            grafoCompletoOrdenado: grafo,
-            aleatorizacionDeHeuristica: aleatorizacionDeHeuristica(20),
-            iteracionesMaximas: (grafo.numberNodes * 200),
-            printCadaTantasIteraciones: (grafo.numberNodes * 2),
-            cantidadIteracionesBL: 1000,
-        });
-
-    // console.log("Mejor resultado", mejorResultado)
-    console.log(`Mejor peso: >>> ${mejorPeso} <<<`);
-    console.log(`Peso optimo: >>> ${grafo.weightOp} <<<
-    `);
-}
-
-listaDeGrafos.forEach(armarMetricasPorGrafo);
-
-
-// const grafo = listaDeGrafos[23];
-// const grafoNodos = `Grafo ${grafo.nameGraph} tiene: >>> ${grafo.numberNodes} Nodos <<<`;
-// console.log(grafoNodos)
+// const armarMetricasPorGrafo = (grafo) => {
+//     const grafoNodos = `Grafo actual ${grafo.nameGraph} tiene: >>> ${grafo.numberNodes} Nodos <<<`;
+//     console.log(grafoNodos)
 
 // const { mejorResultado, mejorPeso } = 
 //     grasp({
 //         grafoCompletoOrdenado: grafo,
 //         aleatorizacionDeHeuristica: aleatorizacionDeHeuristica(20),
-//         iteracionesMaximas: (grafo.numberNodes * 200),
+//         iteracionesMaximas: (grafo.numberNodes * 100),
 //         printCadaTantasIteraciones: (grafo.numberNodes * 2),
-//         cantidadIteracionesBL: 100000,
-//         logsActivados: true
+//         cantidadIteracionesBL: 1000,
 //     });
 
-// console.log("Mejor resultado", mejorResultado)
-// console.log(`Mejor peso: >>> ${mejorPeso} <<<`);
-// console.log(`Peso optimo: >>> ${grafo.weightOp} <<<`);
+//     // console.log("Mejor resultado", mejorResultado)
+//     console.log(`Mejor peso: >>> ${mejorPeso} <<<`);
+//     console.log(`Peso optimo: >>> ${grafo.weightOp} <<<
+//     `);
+// }
+
+// listaDeGrafos.forEach(armarMetricasPorGrafo);
+
+
+const grafo = listaDeGrafos[13];
+const grafoNodos = `Grafo ${grafo.nameGraph} tiene: >>> ${grafo.numberNodes} Nodos <<<`;
+console.log(grafoNodos)
+
+const { mejorResultado, mejorPeso } = 
+    grasp({
+        grafoCompletoOrdenado: grafo,
+        aleatorizacionDeHeuristica: aleatorizacionDeHeuristica(20),
+        iteracionesMaximas: (grafo.numberNodes * 100),
+        printCadaTantasIteraciones: (grafo.numberNodes * 2),
+        cantidadIteracionesBL: 1000,
+        logsActivados: true
+    });
+
+console.log("Mejor resultado", mejorResultado)
+console.log(`Mejor peso: >>> ${mejorPeso} <<<`);
+console.log(`Peso optimo: >>> ${grafo.weightOp} <<<`);

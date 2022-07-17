@@ -1,0 +1,119 @@
+Grafo actual burma14 tiene: >>> 14 Nodos <<<
+TIEMPO DE EJECUCION: 1.230285553 segundos - 0.0205457687351 minutos
+Mejor peso: >>> 3465 <<<
+Peso optimo: >>> 3323 <<<
+    
+Grafo actual gr17 tiene: >>> 17 Nodos <<<
+TIEMPO DE EJECUCION: 1.9038794909999999 segundos - 0.031794787499699995 minutos
+Mejor peso: >>> 2085 <<<
+Peso optimo: >>> 2085 <<<
+    
+Grafo actual gr21 tiene: >>> 21 Nodos <<<
+TIEMPO DE EJECUCION: 3.326136219 segundos - 0.05554647485729999 minutos
+Mejor peso: >>> 2914 <<<
+Peso optimo: >>> 2707 <<<
+    
+Grafo actual gr24 tiene: >>> 24 Nodos <<<
+TIEMPO DE EJECUCION: 4.638853118999999 segundos - 0.07746884708729998 minutos
+Mejor peso: >>> 1402 <<<
+Peso optimo: >>> 1272 <<<
+    
+Grafo actual fri26 tiene: >>> 26 Nodos <<<
+TIEMPO DE EJECUCION: 5.324131939 segundos - 0.0889130033813 minutos
+Mejor peso: >>> 994 <<<
+Peso optimo: >>> 937 <<<
+    
+Grafo actual bayg29 tiene: >>> 29 Nodos <<<
+TIEMPO DE EJECUCION: 7.398338496999999 segundos - 0.12355225289989999 minutos
+Mejor peso: >>> 1934 <<<
+Peso optimo: >>> 1610 <<<
+    
+Grafo actual bays29 tiene: >>> 29 Nodos <<<
+TIEMPO DE EJECUCION: 7.488570265999999 segundos - 0.1250591234422 minutos
+Mejor peso: >>> 2375 <<<
+Peso optimo: >>> 2020 <<<
+    
+Grafo actual dantzig42 tiene: >>> 42 Nodos <<<
+TIEMPO DE EJECUCION: 18.494268973 segundos - 0.3088542918491 minutos
+Mejor peso: >>> 979 <<<
+Peso optimo: >>> 699 <<<
+    
+Grafo actual att48 tiene: >>> 48 Nodos <<<
+TIEMPO DE EJECUCION: 25.231901724 segundos - 0.4213727587908 minutos
+Mejor peso: >>> 14859 <<<
+Peso optimo: >>> 10628 <<<
+    
+Grafo actual gr48 tiene: >>> 48 Nodos <<<
+TIEMPO DE EJECUCION: 25.416367921 segundos - 0.4244533442807 minutos
+Mejor peso: >>> 7184 <<<
+Peso optimo: >>> 5046 <<<
+    
+Grafo actual hk48 tiene: >>> 48 Nodos <<<
+TIEMPO DE EJECUCION: 26.215556401 segundos - 0.4377997918967 minutos
+Mejor peso: >>> 16505 <<<
+Peso optimo: >>> 11461 <<<
+    
+Grafo actual eil51 tiene: >>> 51 Nodos <<<
+TIEMPO DE EJECUCION: 32.906938731 segundos - 0.5495458768077 minutos
+Mejor peso: >>> 600.7622915805937 <<<
+Peso optimo: >>> 426 <<<
+    
+Grafo actual berlin52 tiene: >>> 52 Nodos <<<
+TIEMPO DE EJECUCION: 33.617996733999995 segundos - 0.5614205454577998 minutos
+Mejor peso: >>> 10403.80139810027 <<<
+Peso optimo: >>> 7542 <<<
+    
+Grafo actual brazil58 tiene: >>> 58 Nodos <<<
+TIEMPO DE EJECUCION: 44.908116736 segundos - 0.7499655494912 minutos
+Mejor peso: >>> 39083 <<<
+Peso optimo: >>> 25395 <<<
+    
+Grafo actual eil76 tiene: >>> 76 Nodos <<<
+TIEMPO DE EJECUCION: 94.925789814 segundos - 1.5852606898938 minutos
+Mejor peso: >>> 902.8477038332778 <<<
+Peso optimo: >>> 538 <<<
+    
+Grafo actual gr96 tiene: >>> 96 Nodos <<<
+TIEMPO DE EJECUCION: 181.07455087099999 segundos - 3.0239449995456997 minutos
+Mejor peso: >>> 115262 <<<
+Peso optimo: >>> 55209 <<<
+    
+Grafo actual eil101 tiene: >>> 101 Nodos <<<
+TIEMPO DE EJECUCION: 219.71749572999997 segundos - 3.6692821786909993 minutos
+Mejor peso: >>> 1163.5346774090644 <<<
+Peso optimo: >>> 629 <<<
+    
+Grafo actual gr120 tiene: >>> 120 Nodos <<<
+TIEMPO DE EJECUCION: 339.576325501 segundos - 5.6709246358667 minutos
+Mejor peso: >>> 15393 <<<
+Peso optimo: >>> 6942 <<<
+    
+Grafo actual bier127 tiene: >>> 127 Nodos <<<
+TIEMPO DE EJECUCION: 4232.003427604 segundos - 70.6744572409868 minutos
+Mejor peso: >>> 239236.91416561577 <<<
+Peso optimo: >>> 118282 <<<
+    
+Grafo actual ch130 tiene: >>> 130 Nodos <<<
+TIEMPO DE EJECUCION: 427.408659328 segundos - 7.1377246107776 minutos
+Mejor peso: >>> 14831.42390333295 <<<
+Peso optimo: >>> 6110 <<<
+    
+Grafo actual gr137 tiene: >>> 137 Nodos <<<
+TIEMPO DE EJECUCION: 498.50332079699996 segundos - 8.3250054573099 minutos
+Mejor peso: >>> 179354 <<<
+Peso optimo: >>> 69853 <<<
+    
+Grafo actual ch150 tiene: >>> 150 Nodos <<<
+TIEMPO DE EJECUCION: 614.7999043799999 segundos - 10.267158403145999 minutos
+Mejor peso: >>> 17241.728962620506 <<<
+Peso optimo: >>> 6528 <<<
+    
+Grafo actual brg180 tiene: >>> 180 Nodos <<<
+TIEMPO DE EJECUCION: 1491.898160089 segundos - 24.9146992734863 minutos
+Mejor peso: >>> 36470 <<<
+Peso optimo: >>> 1950 <<<
+    
+Grafo actual d198 tiene: >>> 198 Nodos <<<
+TIEMPO DE EJECUCION: 1367.6086283729999 segundos - 22.839064093829098 minutos
+Mejor peso: >>> 39309.61627189288 <<<
+Peso optimo: >>> 15780 <<<

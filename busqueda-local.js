@@ -1,3 +1,4 @@
+
 /* 
     ORDEN DE COMPLEJIDAD: intercambiarConsecutivos
     O(1)
@@ -39,21 +40,60 @@ const intercambiarConsecutivos = ({ grafo, aristas, posicionIntercambiar }) => {
 const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
     // Hacemos copia de las aristas.
     let aristasACambiar = [...aristas],
-        { nuevasAristas, pesoARestar, pesoASumar } = 
+        { nuevasAristas, pesoARestar, pesoASumar } =
             intercambiarConsecutivos({
-                grafo: grafo, 
-                aristas: aristasACambiar, 
+                grafo: grafo,
+                aristas: aristasACambiar,
                 posicionIntercambiar: posicionIntercambiar
             }),
         pesoNuevo = ((peso - pesoARestar) + pesoASumar);
 
     if (pesoNuevo < peso) {
-        return { resultadoEncontrado: nuevasAristas, pesoEncontrado: pesoNuevo };
+        return { resultadoEncontrado: nuevasAristas, pesoEncontrado: pesoNuevo, vecino: true };
     }
 
-    return { resultadoEncontrado: aristas, pesoEncontrado: peso };
+    return { resultadoEncontrado: aristas, pesoEncontrado: peso, vecino: false };
 }
 
+/* 
+    ORDEN DE COMPLEJIDAD: mejorDeVecindad
+
+    O(n)
+*/
+export const mejorDeVecindad = ({ grafo, aristas, peso }) => {
+    let posicion = 1;
+    let posicionFinal = aristas.length - 2;
+    let mejorResultado = aristas;
+    let mejorPeso = peso;
+    let cantidadVecinosEncontradosMejores = 0;
+
+    while (posicion <= posicionFinal) {
+        let { resultadoEncontrado, pesoEncontrado, vecino } = buscarVecino({
+            grafo: grafo,
+            aristas: mejorResultado,
+            peso: mejorPeso,
+            posicionIntercambiar: posicion
+        });
+
+        // console.log(`MEJOR VECINDAD - peso parcial: ${pesoEncontrado} - es vecino?: ${vecino}`);
+
+        mejorResultado = resultadoEncontrado;
+        mejorPeso = pesoEncontrado;
+        posicion++;
+
+        if (vecino) {
+            cantidadVecinosEncontradosMejores++;
+            posicion = 1;
+        };
+    }
+
+    return {
+        resultadoMejorEnVecindad: mejorResultado,
+        pesoMejorEnVecindad: mejorPeso,
+        ultimaPosicion: posicion,
+        cantidadVecinosEncontradosMejores
+    };
+}
 
 /* 
     ORDEN DE COMPLEJIDAD: busquedaLocal
@@ -63,40 +103,36 @@ const buscarVecino = ({ grafo, aristas, peso, posicionIntercambiar }) => {
 
     O(n) * O(n-1)  => O(n * n-1) => O(nˆ2 - n) => O(nˆ2)
 */
-export const busquedaLocal = ({ grafo, aristas, peso, configuracion }) => {
-    let { cantidadIteraciones = 3 } = configuracion;
+export const busquedaLocal = ({ grafo, aristas, peso, configuracion = { cantidadIteraciones: 3 } }) => {
+    let { cantidadIteraciones } = configuracion;
 
     // Buscar vecino mejor
-    let encontreVecinoMejor = false,
-        mejorPorcentajeDeDisminucion = 0,
-        mejorResultado = aristas,
-        mejorPeso = peso,
-        contador = 0,
-        posicionIntercambiar = 1,
-        posicionParaReiniciar = aristas.length - 2; // No intercambio con la ultima posicion.
+    let encontreVecinoMejor = false;
+    let contador = 0;
+    let mejorResultado = aristas;
+    let mejorPeso = peso;
+    let cantidadEncontradosMejores = 0;
 
     while ((contador < cantidadIteraciones)) {
-        let { resultadoEncontrado, pesoEncontrado } = buscarVecino({
-            grafo: grafo, 
-            aristas: mejorResultado, 
-            peso: mejorPeso, 
-            posicionIntercambiar: posicionIntercambiar
+        let {
+            resultadoMejorEnVecindad,
+            pesoMejorEnVecindad,
+            ultimaPosicion,
+            cantidadVecinosEncontradosMejores
+        } = mejorDeVecindad({
+            grafo: grafo,
+            aristas: mejorResultado,
+            peso: mejorPeso
         });
 
+        mejorResultado = resultadoMejorEnVecindad;
+        mejorPeso = pesoMejorEnVecindad;
+
         contador++;
-        posicionIntercambiar++;
-
-        mejorResultado = resultadoEncontrado;
-        mejorPeso = pesoEncontrado;
-
-        // Reiciamos si estamos en la ultima posicion y no encontre vecino mejor.
-        if (posicionIntercambiar === posicionParaReiniciar) {
-            posicionIntercambiar = 1;
-            mejorResultado = aristas;
-            mejorPeso = peso;
-        }
+        cantidadEncontradosMejores += cantidadVecinosEncontradosMejores;
     }
 
-    return { resultadoEncontrado: mejorResultado, pesoEncontrado: mejorPeso };
+    // console.log(`BUSQUEDA LOCAL - cantidad mejores encontrados: ${cantidadEncontradosMejores}`);
 
+    return { resultadoEncontrado: mejorResultado, pesoEncontrado: mejorPeso };
 }
